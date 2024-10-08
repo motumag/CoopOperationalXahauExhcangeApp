@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUser = exports.registerUser = void 0;
+exports.getAllUsers = exports.loginUser = exports.registerUser = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const registerUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -67,3 +67,13 @@ const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.loginUser = loginUser;
+const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = yield User_1.default.findAll({ attributes: { exclude: ['password'] } });
+        res.status(200).json({ users });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.getAllUsers = getAllUsers;

@@ -6,9 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const UserController_1 = require("../contollers/UserController");
 const validation_1 = require("../validations/validation");
+const jwtAuthentication_1 = require("../middlewares/jwtAuthentication");
 const router = express_1.default.Router();
 // Registration route
 router.post('/register', validation_1.validateUserRegistration, UserController_1.registerUser);
 // Login route
 router.post('/login', validation_1.validateUserLogin, UserController_1.loginUser);
+router.get('/getAllUsers', jwtAuthentication_1.authenticateJWT, UserController_1.getAllUsers);
 exports.default = router;

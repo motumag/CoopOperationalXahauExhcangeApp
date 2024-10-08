@@ -53,3 +53,12 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
     next(error);
   }
 };
+
+export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const users = await User.findAll({ attributes: { exclude: ['password'] } });
+    res.status(200).json({ users });
+  } catch (error) {
+    next(error);
+  }
+};
