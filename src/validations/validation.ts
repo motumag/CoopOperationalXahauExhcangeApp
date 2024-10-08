@@ -11,3 +11,15 @@ export const validateUserRegistration = (req: Request, res: Response, next: Next
   }
   next();
 };
+
+// Validate the user login request
+export const validateUserLogin = (req: Request, res: Response, next: NextFunction) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+     res.status(400).json({
+      message: 'Both email and password are required',
+    });
+    return;
+  }
+  next();
+};

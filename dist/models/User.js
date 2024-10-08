@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const dbConfig_1 = require("../config/dbConfig");
-const bcrypt_1 = __importDefault(require("bcrypt")); // Import bcrypt for password hashing
+const bcrypt_1 = __importDefault(require("bcrypt"));
 // Define the User model
 class User extends sequelize_1.Model {
     setPassword(password) {
@@ -22,7 +22,6 @@ class User extends sequelize_1.Model {
             this.password = yield bcrypt_1.default.hash(password, 10);
         });
     }
-    // Add a method to validate the password
     validatePassword(password) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield bcrypt_1.default.compare(password, this.password);
@@ -61,6 +60,6 @@ User.init({
 }, {
     sequelize: dbConfig_1.sequelize,
     tableName: 'users',
-    timestamps: true, // Automatically manage `createdAt` and `updatedAt`
+    timestamps: true,
 });
 exports.default = User;
