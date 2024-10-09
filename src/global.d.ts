@@ -4,4 +4,3 @@ declare namespace Express {
       user?: any;  // Make `user` optional to avoid issues
     }
   }
-  

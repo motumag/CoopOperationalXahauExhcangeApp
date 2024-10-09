@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const errorHandler_1 = require("./middlewares/errorHandler");
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const dbConfig_1 = require("./config/dbConfig");
+const ExchangeRateController_1 = require("./contollers/ExchangeRateController");
 const app = (0, express_1.default)();
 // Middleware for parsing JSON
 app.use(express_1.default.json());
@@ -25,6 +26,9 @@ app.use(express_1.default.json());
     yield dbConfig_1.sequelize.sync({ alter: true }); // Use `alter: true` for migrations
     // await sequelize.sync({ force: true }); 
     console.log('All models were synchronized successfully.');
+    // Start the cron job for fetching forex rates every minute
+    (0, ExchangeRateController_1.startForexRateScheduler)();
+    console.log('Forex rate scheduler started.');
 })).catch((error) => {
     console.error('Database connection failed:', error);
 });
