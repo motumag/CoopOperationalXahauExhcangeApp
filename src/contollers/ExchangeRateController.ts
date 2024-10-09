@@ -1,6 +1,7 @@
 import * as cron from 'node-cron';
 import * as superagent from 'superagent';
 import ForexRate from '../models/ForexRate';
+import { Request, Response, NextFunction } from 'express';
 
 const BANK_API_URL: string = 'http://10.1.230.6:7081/v1/cbo/';
 
@@ -11,7 +12,6 @@ const convertFloat = (value: string): number => {
   }
   return num;
 };
-
   // Schedule the cron job to run every minute
 export const startForexRateScheduler = () => {
   cron.schedule('* * * * *', async () => {
@@ -60,3 +60,17 @@ export const startForexRateScheduler = () => {
     }
   });
 };
+export const getLatestForexRate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const latestForexRate = await ForexRate.findOne({
+        order: [['updated_at', 'DESC']],
+      });
+      if (!latestForexRate) {
+        res.status(404).json({ message: 'No forex rates found.' });
+        return;
+      }
+      res.status(200).json({ latestForexRate });
+    } catch (error) {
+      next(error);
+    }
+  };

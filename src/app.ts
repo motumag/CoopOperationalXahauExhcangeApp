@@ -1,6 +1,7 @@
 import express from 'express';
 import { errorHandler } from './middlewares/errorHandler';
 import userRoutes from './routes/userRoutes';
+import exchangeRateRoute from './routes/exchangeRateRoutes';
 import { connectDB,sequelize } from './config/dbConfig';
 import {startForexRateScheduler} from './contollers/ExchangeRateController'
 
@@ -21,6 +22,7 @@ connectDB().then(async () => {
   });
 // user routes 
 app.use('/api/users', userRoutes);
+app.use('/api/exchangeRate', exchangeRateRoute);
 
 app.use(errorHandler);
 

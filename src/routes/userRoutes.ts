@@ -10,8 +10,4 @@ router.post('/register',validateUserRegistration, registerUser);
 // Login route
 router.post('/login', validateUserLogin, loginUser);
 router.get('/getAllUsers', authenticateJWT, getAllUsers);
-
-
-
-
 export default router;
