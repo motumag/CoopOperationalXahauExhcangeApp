@@ -24,7 +24,6 @@ const registerUser = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         user.lastName = lastName;
         user.username = username;
         user.email = email;
-        // hash the password
         yield user.setPassword(password);
         yield user.save();
         res.status(201).json({

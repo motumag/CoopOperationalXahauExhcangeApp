@@ -11,7 +11,6 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
     user.lastName = lastName;
     user.username = username;
     user.email = email;
-    // hash the password
     await user.setPassword(password); 
     await user.save();
 

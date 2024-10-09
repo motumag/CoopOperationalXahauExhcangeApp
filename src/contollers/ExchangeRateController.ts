@@ -74,3 +74,21 @@ export const getLatestForexRate = async (req: Request, res: Response, next: Next
       next(error);
     }
   };
+
+ // Controller to create a new Forex rate
+export const tradeServiceCreateRate = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { mid_rate, buy_rate, sell_rate } = req.body;
+      const newForexRate = await ForexRate.create({
+        mid_rate,
+        buy_rate,
+        sell_rate,
+        active_bank:"CBO",
+        source: 'TRADESERVICE',
+        updated_at: new Date(),
+      });
+      res.status(201).json({ message: 'Forex rate created successfully', data: newForexRate });
+    } catch (error) {
+      next(error);
+    }
+  };
